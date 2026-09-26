@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f9f53">
+  <title>Registro de cuenta</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero">
+      <div class="hero-inner">
+        <div>
+          <p class="eyebrow">REGISTRO DE CLIENTE</p>
+          <h1>Configuración de cuenta</h1>
+          <p class="hero-copy">Complete los datos paso a paso. Cada bloque aparece al terminar el anterior.</p>
+        </div>
+        <div class="record-counter" aria-live="polite">
+          <span>Registro</span>
+          <strong id="recordNumber">1</strong>
+        </div>
+      </div>
+    </header>
+
+    <main class="form-wrapper">
+      <section class="form-card">
+        <div class="progress-panel" aria-hidden="true">
+          <div class="progress-head">
+            <span id="progressLabel">Paso 1 de 7</span>
+            <span id="savedCount">0 guardados</span>
+          </div>
+          <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+        </div>
+
+        <div id="globalStatus" class="status hidden" role="status" aria-live="polite"></div>
+
+        <form id="accountForm" novalidate autocomplete="off">
+          <section id="stepCredentials" class="step visible active" data-step="1">
+            <div class="step-heading">
+              <span class="step-number">1</span>
+              <div>
+                <h2>Acceso de la cuenta</h2>
+                <p>Ingrese correo y password completos.</p>
+              </div>
+              <button type="button" class="edit-step hidden" data-edit-step="1">CORREGIR</button>
+            </div>
+
+            <div class="field" data-field="email">
+              <label for="email">Correo</label>
+              <input id="email" type="email" inputmode="email" autocomplete="username" placeholder="correo@ejemplo.com" required>
+              <small class="field-help">Debe ser un correo válido.</small>
+              <small class="enter-hint">↵ Presiona Enter para continuar</small>
+              <small class="field-error" id="emailError"></small>
+            </div>
+
+            <div class="field" data-field="password">
+              <label for="password">Password</label>
+              <div class="password-row">
+                <input id="password" type="password" autocomplete="current-password" placeholder="Ingrese el password" required>
+                <button type="button" class="icon-button" id="togglePassword">Mostrar</button>
+              </div>
+              <small class="enter-hint">↵ Presiona Enter para continuar</small>
+              <small class="field-error" id="passwordError"></small>
+            </div>
+          </section>
+
+          <section id="stepDates" class="step" data-step="2">
+            <div class="step-heading">
+              <span class="step-number">2</span>
+              <div>
+                <h2>Rango de fechas</h2>
+                <p>Indique la fecha mínima y máxima aceptada.</p>
+              </div>
+              <button type="button" class="edit-step hidden" data-edit-step="2">CORREGIR</button>
+            </div>
+            <div class="date-grid">
+              <div class="field" data-field="minDate">
+                <label for="minDate">MIN DATE</label>
+                <input id="minDate" type="date" required>
+                <small class="field-error" id="minDateError"></small>
+              </div>
+              <div class="field" data-field="maxDate">
+                <label for="maxDate">MAX DATE</label>
+                <input id="maxDate" type="date" required>
+                <small class="field-help">Debe ser posterior a MIN DATE (no puede ser igual).</small>
+                <small class="field-error" id="maxDateError"></small>
+              </div>
+            </div>
+          </section>
+
+          <section id="stepType" class="step" data-step="3">
+            <div class="step-heading">
+              <span class="step-number">3</span>
+              <div>
+                <h2>Tipo de cita</h2>
+                <p>Seleccione una opción.</p>
+              </div>
+              <button type="button" class="edit-step hidden" data-edit-step="3">CORREGIR</button>
+            </div>
+            <fieldset class="choice-box" data-field="requiresCas">
+              <legend>¿La cuenta requiere cita Consular y CAS?</legend>
+              <label class="choice-option">
+                <input type="radio" name="requiresCas" value="si">
+                <span><strong>Sí</strong><small>Consulado + CAS</small></span>
+              </label>
+              <label class="choice-option">
+                <input type="radio" name="requiresCas" value="no">
+                <span><strong>No</strong><small>Solo Consulado</small></span>
+              </label>
+            </fieldset>
+            <small class="field-error" id="requiresCasError"></small>
+          </section>
+
+          <section id="stepFacility" class="step" data-step="4">
+            <div class="step-heading">
+              <span class="step-number">4</span>
+              <div>
+                <h2>Consulado</h2>
+                <p>Seleccione la sede consular.</p>
+              </div>
+              <button type="button" class="edit-step hidden" data-edit-step="4">CORREGIR</button>
+            </div>
+            <div class="field" data-field="facilityId">
+              <label for="facilityId">FACILITY_ID / Consulado</label>
+              <select id="facilityId" required>
+                <option value="">Seleccione un consulado</option>
+              </select>
+              <small class="field-error" id="facilityIdError"></small>
+            </div>
+          </section>
+
+          <section id="stepAsc" class="step" data-step="5">
+            <div class="step-heading">
+              <span class="step-number">5</span>
+              <div>
+                <h2>CAS / ASC</h2>
+                <p>Seleccione la sede CAS correspondiente.</p>
+              </div>
+              <button type="button" class="edit-step hidden" data-edit-step="5">CORREGIR</button>
+            </div>
+            <div class="field" data-field="ascFacilityId">
+              <label for="ascFacilityId">ASC_FACILITY_ID / CAS</label>
+              <select id="ascFacilityId">
+                <option value="">Seleccione un ASC / CAS</option>
+              </select>
+              <small class="field-error" id="ascFacilityIdError"></small>
+            </div>
+          </section>
+
+          <section id="stepReference" class="step" data-step="6">
+            <div class="step-heading">
+              <span class="step-number">6</span>
+              <div>
+                <h2>Referencia</h2>
+                <p>Nombre, ID o referencia para identificar esta cuenta.</p>
+              </div>
+              <button type="button" class="edit-step hidden" data-edit-step="6">CORREGIR</button>
+            </div>
+            <div class="field" data-field="reference">
+              <label for="reference">Referencia, ID o nombre</label>
+              <input id="reference" type="text" maxlength="120" placeholder="Ej. Cliente 02 / ID 4312 / Juan Pérez" required>
+              <small class="enter-hint">↵ Presiona Enter para continuar</small>
+              <small class="field-error" id="referenceError"></small>
+            </div>
+          </section>
+
+          <section id="stepNotes" class="step" data-step="7">
+            <div class="step-heading">
+              <span class="step-number">7</span>
+              <div>
+                <h2>Notas generales</h2>
+                <p>Información adicional opcional.</p>
+              </div>
+              <button type="button" class="edit-step hidden" data-edit-step="7">CORREGIR</button>
+            </div>
+            <div class="field" data-field="notes">
+              <label for="notes">Notas</label>
+              <textarea id="notes" rows="5" maxlength="1000" placeholder="Información adicional de la cuenta..."></textarea>
+              <div class="char-counter"><span id="notesCount">0</span>/1000</div>
+            </div>
+            <button type="button" class="step-next" data-next="notes">REVISAR Y TERMINAR</button>
+          </section>
+
+          <section id="stepActions" class="step actions-step">
+            <div id="recordSummary" class="summary"></div>
+            <div class="actions">
+              <button type="button" id="addMore" class="secondary-button">AGREGAR MÁS</button>
+              <button type="button" id="sendAll" class="primary-button">GUARDAR Y ENVIAR</button>
+            </div>
+            <p class="send-disclaimer">El formulario mostrará éxito únicamente si Telegram confirma el envío.</p>
+          </section>
+        </form>
+
+        <section id="savedPanel" class="saved-panel hidden">
+          <div class="saved-title-row">
+            <h2>Registros capturados</h2>
+            <span id="savedBadge" class="saved-badge">0</span>
+          </div>
+          <div id="savedList"></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <div id="successModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+    <div class="modal-card">
+      <div class="modal-icon">✓</div>
+      <h2 id="successTitle">Información enviada</h2>
+      <p id="successMessage">Telegram confirmó el envío.</p>
+      <button type="button" id="successOk" class="modal-ok">OK</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
